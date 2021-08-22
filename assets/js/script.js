@@ -5,6 +5,7 @@ const timeEl = document.getElementById('time')
 const evalEl = document.getElementById('eval')
 const startBtn = document.getElementById('start')
 const introEl = document.getElementById('intro');
+let scores = [];
 let correctAnswerIdx = 0;
 let currentQuestionIdx = 0;
 let currentTime = 59;
@@ -128,16 +129,49 @@ function gameOver() {
     const submitInitials = document.createElement('button');
 
     inputInitials.setAttribute('placeholder', 'Type Your Initials Here!')
+    inputInitials.setAttribute('id', 'input')
 
     submitInitials.innerHTML = 'Submit'
+    submitInitials.setAttribute('id', 'initials')
+    submitInitials.classList = 'btn btn-warning mx-2'
 
     quizEl.appendChild(inputInitials);
     quizEl.appendChild(submitInitials);
 
+    const submitInitialsEl = document.getElementById('initials')
+
+    submitInitialsEl.addEventListener('click', handleSubmit);
+}
+
+function handleSubmit() {
+    const initials = document.getElementById('input')
+    const newScore = {
+        initial: initials.value,
+        score: finalScore
+    }
+
+    scores.push(newScore);
+    localStorage.setItem('highscores', JSON.stringify(scores))
+    initials.value = "";
 }
 
 startBtn.addEventListener('click', () => {
     timer();
     createQuiz();
 });
+
+function getHighScores() {
+    let localStorageScores = localStorage.getItem('highscores')
+    if (!scores) {
+        scores = [];
+        return false
+    }
+
+    scores = JSON.parse(localStorageScores);
+}
+
+getHighScores();
+console.log(scores);
+
+
 
