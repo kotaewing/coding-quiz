@@ -90,6 +90,7 @@ function createQuiz(eval) {
     for (let i = 0; i < answerArr.length; i++) {
         let answerBtn = document.createElement('button');
         answerBtn.id = `${i}`
+        answerBtn.classList = 'btn btn-warning py-1 my-1'
 
         answerBtn.innerHTML = answerArr[i]
 
@@ -100,19 +101,19 @@ function createQuiz(eval) {
 }
 
 answerContainerEl.addEventListener('click', (event) => {
-    if (currentQuestionIdx >= 5 && parseInt(event.target.attributes.id.value) === questionArr[correctAnswerIdx].correctAnswer) {
+    if (event.target.localName === 'button' && currentQuestionIdx >= 5 && parseInt(event.target.attributes.id.value) === questionArr[correctAnswerIdx].correctAnswer) {
         finalScore = currentTime;
         currentTime = 0;
         evalEl.innerHTML = 'Correct!'
-    } else if (currentQuestionIdx >= 5 && parseInt(event.target.attributes.id.value) !== questionArr[correctAnswerIdx].correctAnswer) {
+    } else if (event.target.localName === 'button' && currentQuestionIdx >= 5 && parseInt(event.target.attributes.id.value) !== questionArr[correctAnswerIdx].correctAnswer) {
         currentTime - 5;
         finalScore = currentTime;
         currentTime = 0;
         evalEl.innerHTML = 'Incorrect!';
-    } else if (parseInt(event.target.attributes.id.value) === questionArr[correctAnswerIdx].correctAnswer) {
+    } else if (event.target.localName === 'button' && parseInt(event.target.attributes.id.value) === questionArr[correctAnswerIdx].correctAnswer) {
         correctAnswerIdx++
         createQuiz('Correct!')
-    } else {
+    } else if (event.target.localName === 'button') {
         currentTime = currentTime - 5;
         correctAnswerIdx++
         createQuiz('Incorrect!')

@@ -1,19 +1,7 @@
-.main {
-  display: flex;
+.highscore-btn {
+  margin-top: 20px;
 }
-
-.main-title {
-  text-align: center;
-  justify-self: center;
-  margin-top: 30vh;
-}
-
-.intro {
-  text-align: center;
-}
-
-.start {
-  width: fit-content;
-  padding: 2rem 5rem;
-  border-radius: 25px;
+.highscore {
+  color: white;
+  text-decoration: none;
 }
