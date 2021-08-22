@@ -153,6 +153,9 @@ function handleSubmit() {
     scores.push(newScore);
     localStorage.setItem('highscores', JSON.stringify(scores))
     initials.value = "";
+
+    // window.location.href = "https://kotaewing.github.io/js-code-quiz/highscore.html";
+    window.location.href = "127.0.0.1:5500/highscore.html";
 }
 
 startBtn.addEventListener('click', () => {
