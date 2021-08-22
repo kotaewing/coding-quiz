@@ -3,7 +3,7 @@
 <img width="1058" alt="Screen Shot 2021-08-21 at 11 11 14 PM" src="https://user-images.githubusercontent.com/79291655/130343205-f6222e05-37bb-4f27-a43d-cd2a8a442c70.png">
 
 ## Link to Website
-[Click Here![(https://kotaewing.github.io/coding-quiz/index.html)
+[Click Here!](https://kotaewing.github.io/coding-quiz/index.html)
 
 ## Table of Contents
 * [Description](#description)
