@@ -5,3 +5,12 @@
   color: white;
   text-decoration: none;
 }
+
+.button {
+  color: black;
+  text-decoration: none;
+}
+
+.list {
+  list-style: none;
+}

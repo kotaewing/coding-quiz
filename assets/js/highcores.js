@@ -1,4 +1,5 @@
 const scoreListEl = document.getElementById('score-list');
+const clearBtnEl = document.getElementById('clear')
 
 const scoresLS = localStorage.getItem('highscores');
 
@@ -12,3 +13,8 @@ scoreList.forEach(score => {
 
     scoreListEl.appendChild(newScore)
 });
+
+clearBtnEl.addEventListener('click', () => {
+    localStorage.removeItem('highscores')
+    window.location.reload(false)
+})
