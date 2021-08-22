@@ -7,6 +7,7 @@ const introEl = document.getElementById('intro');
 let correctAnswerIdx = 0;
 let currentQuestionIdx = 0;
 let currentTime = 60;
+let finalScore = 0;
 
 function timer() {
     let timeInterval = setInterval(() => {
@@ -94,27 +95,32 @@ function createQuiz(eval) {
         answerContainerEl.appendChild(answerBtn)
     }
 
-    console.log({ currentQuestionIdx })
     currentQuestionIdx++
 }
 
 answerContainerEl.addEventListener('click', (event) => {
     if (currentQuestionIdx >= 5 && parseInt(event.target.attributes.id.value) === questionArr[correctAnswerIdx].correctAnswer) {
-        gameOver();
+        finalScore = currentTime;
+        currentTime = 0;
+        evalEl.innerHTML = 'Correct!'
     } else if (currentQuestionIdx >= 5 && parseInt(event.target.attributes.id.value) !== questionArr[correctAnswerIdx].correctAnswer) {
-        evalEl.innerHTML = 'Incorrect';
         currentTime - 5;
-        gameOver();
+        finalScore = currentTime;
+        currentTime = 0;
+        evalEl.innerHTML = 'Incorrect!';
     } else if (parseInt(event.target.attributes.id.value) === questionArr[correctAnswerIdx].correctAnswer) {
-        createQuiz('Correct')
+        createQuiz('Correct!')
     } else {
         currentTime = currentTime - 5;
-        createQuiz('Incorrect')
+        createQuiz('Incorrect!')
     }
 })
 
 function gameOver() {
     console.log('Game Over')
+    console.log(finalScore)
+    questionEl.innerHTML = "";
+    answerContainerEl.innerHTML = "";
 }
 
 startBtn.addEventListener('click', () => {
