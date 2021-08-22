@@ -1,4 +1,5 @@
 const answerContainerEl = document.getElementById('answers');
+const quizEl = document.getElementById('quiz');
 const questionEl = document.getElementById('question')
 const timeEl = document.getElementById('time')
 const evalEl = document.getElementById('eval')
@@ -6,7 +7,7 @@ const startBtn = document.getElementById('start')
 const introEl = document.getElementById('intro');
 let correctAnswerIdx = 0;
 let currentQuestionIdx = 0;
-let currentTime = 60;
+let currentTime = 59;
 let finalScore = 0;
 
 function timer() {
@@ -109,18 +110,29 @@ answerContainerEl.addEventListener('click', (event) => {
         currentTime = 0;
         evalEl.innerHTML = 'Incorrect!';
     } else if (parseInt(event.target.attributes.id.value) === questionArr[correctAnswerIdx].correctAnswer) {
+        correctAnswerIdx++
         createQuiz('Correct!')
     } else {
         currentTime = currentTime - 5;
+        correctAnswerIdx++
         createQuiz('Incorrect!')
     }
 })
 
 function gameOver() {
-    console.log('Game Over')
     console.log(finalScore)
-    questionEl.innerHTML = "";
-    answerContainerEl.innerHTML = "";
+    questionEl.innerHTML = "Game Over!!";
+    answerContainerEl.innerHTML = `Your final score is ${finalScore}`;
+    const inputInitials = document.createElement('input');
+    const submitInitials = document.createElement('button');
+
+    inputInitials.setAttribute('placeholder', 'Type Your Initials Here!')
+
+    submitInitials.innerHTML = 'Submit'
+
+    quizEl.appendChild(inputInitials);
+    quizEl.appendChild(submitInitials);
+
 }
 
 startBtn.addEventListener('click', () => {
