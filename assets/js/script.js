@@ -1,98 +1,90 @@
 const answerContainerEl = document.getElementById('answers');
 const questionEl = document.getElementById('question')
+const timeEl = document.getElementById('time')
 const evalEl = document.getElementById('eval')
 const startBtn = document.getElementById('start')
 const introEl = document.getElementById('intro');
 let correctAnswerIdx = 0;
 let currentQuestionIdx = 0;
-const currentQuestion = (val) => val;
+let currentTime = 60;
 
+function timer() {
+    let timeInterval = setInterval(() => {
+        if (currentTime >= 1) {
+            timeEl.innerHTML = `Time: ${currentTime}`;
 
-if (currentQuestionIdx >= 5) {
-    gameOver();
+            currentTime--;
+        } else {
+            timeEl.innerHTML = "Time: 0";
+
+            clearInterval(timeInterval);
+            gameOver();
+        }
+
+    }, 1000);
 }
 
 const questionArr = [
     {
-        question: 'This is question 1',
+        question: 'Commonly used data types DO NOT include:',
         answers: [
-            'Answer A-1',
-            'Answer B-1',
-            'Answer C-1',
-            'Answer D-1',
+            'strings',
+            'booleans',
+            'alerts',
+            'numbers',
         ],
-        correctAnswer: 0
+        correctAnswer: 2
     },
     {
-        question: 'This is question 2',
+        question: 'The condition in an if/else statement is enclosed with ______.',
         answers: [
-            'Answer A-2',
-            'Answer B-2',
-            'Answer C-2',
-            'Answer D-2',
+            'quotes',
+            'curly brackets',
+            'parenthesis',
+            'square brackets',
         ],
-        correctAnswer: 0
+        correctAnswer: 2
     },
     {
-        question: 'This is question 3',
+        question: 'Arrays in JavaScript can be used to store ________.',
         answers: [
-            'Answer A-3',
-            'Answer B-3',
-            'Answer C-3',
-            'Answer D-3',
+            'numbers and strings',
+            'other arrays',
+            'booleans',
+            'all of the above',
         ],
-        correctAnswer: 0
+        correctAnswer: 3
     },
     {
-        question: 'This is question 4',
+        question: 'String values must be enclosed within ______ when being assigned to variables.',
         answers: [
-            'Answer A-4',
-            'Answer B-4',
-            'Answer C-4',
-            'Answer D-4',
+            'commas',
+            'curly brackets',
+            'quotes',
+            'parenthesis',
         ],
-        correctAnswer: 0
+        correctAnswer: 2
     },
     {
-        question: 'This is question 5',
+        question: 'A very useful tool used during development and debugging for printing content to the debugger is:',
         answers: [
-            'Answer A-5',
-            'Answer B-5',
-            'Answer C-5',
-            'Answer D-5',
+            'console.log',
+            'JavaScript',
+            'terminal/bash',
+            'for loops',
         ],
         correctAnswer: 0
     },
 ]
 
-function currentQuestionSwitch(eval) {
-    switch (currentQuestion(currentQuestionIdx)) {
-        case 0:
-            createQuiz(questionArr[0], eval)
-            break;
-        case 1:
-            createQuiz(questionArr[1], eval)
-            break;
-        case 2:
-            createQuiz(questionArr[2], eval)
-            break;
-        case 3:
-            createQuiz(questionArr[3], eval)
-            break;
-        case 4:
-            createQuiz(questionArr[4], eval)
-            break;
-    }
-}
-
-function createQuiz(answerObj, eval) {
+function createQuiz(eval) {
     introEl.innerHTML = ""
     answerContainerEl.innerHTML = ""
     if (eval) {
         evalEl.innerHTML = eval
     }
-    questionEl.innerHTML = answerObj.question
-    const answerArr = answerObj.answers
+    questionEl.innerHTML = questionArr[currentQuestionIdx].question
+    const answerArr = questionArr[currentQuestionIdx].answers
     for (let i = 0; i < answerArr.length; i++) {
         let answerBtn = document.createElement('button');
         answerBtn.id = `${i}`
@@ -107,10 +99,17 @@ function createQuiz(answerObj, eval) {
 }
 
 answerContainerEl.addEventListener('click', (event) => {
-    if (parseInt(event.target.attributes.id.value) === questionArr[correctAnswerIdx].correctAnswer) {
-        currentQuestionSwitch('Correct')
+    if (currentQuestionIdx >= 5 && parseInt(event.target.attributes.id.value) === questionArr[correctAnswerIdx].correctAnswer) {
+        gameOver();
+    } else if (currentQuestionIdx >= 5 && parseInt(event.target.attributes.id.value) !== questionArr[correctAnswerIdx].correctAnswer) {
+        evalEl.innerHTML = 'Incorrect';
+        currentTime - 5;
+        gameOver();
+    } else if (parseInt(event.target.attributes.id.value) === questionArr[correctAnswerIdx].correctAnswer) {
+        createQuiz('Correct')
     } else {
-        currentQuestionSwitch('Incorrect')
+        currentTime = currentTime - 5;
+        createQuiz('Incorrect')
     }
 })
 
@@ -119,6 +118,7 @@ function gameOver() {
 }
 
 startBtn.addEventListener('click', () => {
-    currentQuestionSwitch();
+    timer();
+    createQuiz();
 });
 
